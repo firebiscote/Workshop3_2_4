@@ -32,13 +32,21 @@ namespace Core.Business
         public void Add(string fullName, string argument)
         {
             string name = fullName.Split('.')[0];
-            Process p = new Process() { StartInfo = new ProcessStartInfo(fullName) };
+            Process p = new Process() { StartInfo = new ProcessStartInfo(fullName, argument) };
+            processes.Add(name, p);
+        }
+
+        public void Add(string fullName, string argument, string verb)
+        {
+            string name = fullName.Split('.')[0];
+            Process p = new Process() { StartInfo = new ProcessStartInfo(fullName, argument) };
+            p.StartInfo.Verb = verb;
             processes.Add(name, p);
         }
 
         public bool Execute(string name)
         {
             return processes[name].Start();
-        }  
+        }
     }
 }
